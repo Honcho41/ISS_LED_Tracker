@@ -39,6 +39,7 @@ def issOverHorizon():
     except:
         issError()
         print("Do something magic, the internet is broken")
+        return True
     
     # use string splitting to extract relevant ISS data.
     # this was done by trial and error and may not be accurate when the TLE updates every few weeks
@@ -48,8 +49,8 @@ def issOverHorizon():
     
     # set home location using ephem Observer function
     home = ephem.Observer()
-    home.lon, home.lat = '-2.14857', '51.53511'
-    home.elevation = 63 # meters
+    home.lon, home.lat = 'XXX', 'XXX' # replace XXX with your longitude (east/west) and latitude (north/south)
+    home.elevation = XX # replace XX with your elevation/altitude in meters
     
     # check if ISS is over 10 degrees above horizon
     home.date = datetime.utcnow()
@@ -94,4 +95,4 @@ while True:
         print("ISS currently visible")
     else:
         issDaylight()
-    time.sleep(5)
+    time.sleep(30)
