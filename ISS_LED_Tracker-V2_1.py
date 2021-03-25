@@ -37,7 +37,7 @@ def issOverHorizon():
         response = requests.get("https://www.celestrak.com/NORAD/elements/stations.txt")
         data = response.text
     except:
-        #issError()
+        issError()
         print("Do something magic, the internet is broken")
         return True
     
