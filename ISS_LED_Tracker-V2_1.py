@@ -37,7 +37,7 @@ def issOverHorizon():
         response = requests.get("https://www.celestrak.com/NORAD/elements/stations.txt")
         data = response.text
     except:
-        issError()
+        #issError()
         print("Do something magic, the internet is broken")
         return True
     
@@ -49,8 +49,8 @@ def issOverHorizon():
     
     # set home location using ephem Observer function
     home = ephem.Observer()
-    home.lon, home.lat = 'XXX', 'XXX' # replace XXX with your longitude (east/west) and latitude (north/south)
-    home.elevation = XX # replace XX with your elevation/altitude in meters
+    home.lon, home.lat = '-1.78499', '51.56704' # replace these with your longitude (east/west) and latitude (north/south)
+    home.elevation = 63 # replace this with your elevation/altitude in meters
     
     # check if ISS is over 10 degrees above horizon
     home.date = datetime.utcnow()
@@ -71,7 +71,7 @@ def issDaylight():
     issCurrent = ephem.Observer()
     issCurrent.lat = issLat
     issCurrent.long = issLong
-    issCurrent.elevation = 408000 # at the time of writing ISS averages 408km above surface
+    issCurrent.elevation = 420000 # at the time of writing ISS averages 420km above surface
     
     # use ephem module to get next sunrise/set times for ISS current location
     next_sunrise_datetime = issCurrent.next_rising(ephem.Sun()).datetime()
@@ -83,16 +83,16 @@ def issDaylight():
     # if statement to output if ISS is in sunlight or eclipse
     if it_is_day:
         issInDay()
-        print("ISS in daylight")
+        print(str(datetime.utcnow().strftime('%H:%M:%S')) + " UTC: ISS in daylight")
     else:
         issInDark()
-        print("ISS in dark")
+        print(str(datetime.utcnow().strftime('%H:%M:%S')) + " UTC: ISS in dark")
 
 # run the functions through an infinite while loop
 while True:
     if issOverHorizon():
         issAbove()
-        print("ISS currently visible")
+        print(str(datetime.utcnow().strftime('%H:%M:%S')) + " UTC: ISS currently visible")
     else:
         issDaylight()
     time.sleep(30)
